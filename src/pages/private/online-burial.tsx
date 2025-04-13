@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useLocation } from "wouter";
 import { format } from "date-fns";
 import {
   Calendar,
@@ -9,7 +8,6 @@ import {
   Video,
   X,
   Play,
-  Share2,
   Users,
   Lock,
   MicOff,

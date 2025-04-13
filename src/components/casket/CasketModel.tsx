@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, Suspense, useCallback } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useTexture, useGLTF, OrbitControls } from "@react-three/drei";
+import { useTexture, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { GLTF } from "three-stdlib";
 import { CasketPart, Material, CasketPartConfig } from "@/lib/constants";
@@ -23,7 +23,7 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
   const rotationSpeed = useCasketStore((state) => state.rotationSpeed);
   const isCapOpen = useCasketStore((state) => state.isCapOpen);
   const [modelLoaded, setModelLoaded] = useState(false);
-  const [useRealisticModel, setUseRealisticModel] = useState(true);
+  const [useRealisticModel] = useState(true);
   const [prevCapState, setPrevCapState] = useState(false);
 
   const { camera } = useThree();
@@ -259,7 +259,7 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
   }, [modelLoaded, updateModelMaterials]);
 
   // Reference for lid animation
-  const lidRef = useRef<THREE.Object3D>();
+  const lidRef = useRef<THREE.Object3D | null>(null);
   const [lidAngle, setLidAngle] = useState(0);
   const targetLidAngle = isCapOpen ? Math.PI * 0.6 : 0; // 60 degrees when open, 0 when closed
 

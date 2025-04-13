@@ -1,26 +1,25 @@
 import { useRef } from "react";
-import { useThree, useFrame } from "@react-three/fiber";
+import {  useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { useCasketStore } from "@/store/useCasketStore";
+import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 const CameraControls = () => {
-  const { camera, gl } = useThree();
-  const controls = useRef();
+  const controls = useRef<OrbitControlsImpl | null>(null);
   const isRotating = useCasketStore((state) => state.isRotating);
 
-  // Disable rotation controls when auto-rotation is enabled
   useFrame(() => {
     if (controls.current) {
       controls.current.autoRotate = isRotating;
+      controls.current.update();
     }
   });
 
   return (
     <OrbitControls
       ref={controls}
-      args={[camera, gl.domElement]}
-      enableZoom={true}
+      enableZoom
       enablePan={false}
       enableRotate={!isRotating}
       minDistance={2}
@@ -28,7 +27,6 @@ const CameraControls = () => {
       minPolarAngle={0}
       maxPolarAngle={Math.PI / 2}
       target={new THREE.Vector3(0, 0, 0)}
-      autoRotate={isRotating}
       autoRotateSpeed={1}
     />
   );

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import  { useState } from "react";
 import { X, Check, X as XIcon, User } from "lucide-react";
 import PersonalInfo from "./PersonalInfo";
 
 
-const CompleteTaskModal = ({ isOpen }) => {
+const CompleteTaskModal = () => {
 const [completeProfileModal, setCompleteProfileModal] = useState<boolean>(true);
 const [isOpenPersonalInfo, setIsOpenPersonalInfo] = useState<boolean>(false);
  

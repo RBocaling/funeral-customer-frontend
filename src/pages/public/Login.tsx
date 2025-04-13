@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import MessageError from "@/components/ui/MessageError";
-import React, { useState } from "react";
+import { useAuthStore } from "@/store/authStore";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -10,9 +11,12 @@ const Login = () => {
   const [password, setPassword] = useState<string>("")
   const [isError, setIsError] = useState<boolean>(false)
 
+  const login = useAuthStore((state) => state.login);
+
   const handleLogin = (e:any) => {
      e.preventDefault()
-     if (username === "test" && password === "test123") {
+    if (username === "test" && password === "test123") {
+       login()
        navigate("/");
      } else {
        setIsError(true)

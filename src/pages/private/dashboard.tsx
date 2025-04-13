@@ -1,11 +1,12 @@
+import { Badge } from "@/components/ui/badge";
 import {
-  CalendarCheck,
+  Bath,
   CircleDollarSign,
+  FolderDot,
   TrendingUp,
-  UserCheck,
   Users,
 } from "lucide-react";
-import React from "react";
+import  { ReactNode } from "react";
 import {
   AreaChart,
   Area,
@@ -22,11 +23,13 @@ function StatCard({
   label,
   value,
   trend,
+  additional
 }: {
   icon: any;
   label: string;
   value: string;
-  trend: string;
+    trend?: string;
+    additional?: ReactNode
 }) {
   return (
     <div
@@ -42,10 +45,13 @@ function StatCard({
           <p className="text-white text-2xl font-semibold mt-1">{value}</p>
         </div>
       </div>
-      <div className="mt-4 flex items-center gap-2">
+      {
+        trend && <div className="mt-4 flex items-center gap-2">
         <TrendingUp className="w-4 h-4 text-green-400" />
         <span className="text-green-400 text-sm">{trend}</span>
       </div>
+      }
+      {additional}
     </div>
   );
 }
@@ -138,11 +144,18 @@ const dashboard = () => {
     },
   ];
 
-  const locations = [...new Set(bookings.map((booking) => booking.location))];
-  const statuses = [...new Set(bookings.map((booking) => booking.status))];
-
+  const transactions = [
+    {
+      title: "Completed",
+      value: 10,
+   },
+    {
+      title: "Pending",
+      value: 10,
+   },
+ ]
   return (
-    <div className="py-7">
+    <div className="container px-5s mx-auto">
       <h1 className="text-gradient text-2xl font-bold flex items-center px-7">
         Hello, Juan
         <img src="/waving.png" className="w-16" alt="" />
@@ -151,36 +164,45 @@ const dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard
             icon={CircleDollarSign}
-            label="Total Revenue"
-            value="$22,500"
-            trend="+12.5% from last month"
+            label="Total Transaction"
+            value="25"
+            additional={
+              <div className="flex items-center gap-7 mt-5">
+                {transactions.map((item, index) => (
+                  <div key={index} className="relative flex flex-col items-center justify-center">
+                    <Badge className="absolute -top-4 -right-4 bg-violet-500/10 h-7 w-7 text-violet-500 rounded-full animate-bounce">{item.value}</Badge>
+                    <p className="text-sm font-medium tracking-wide">{ item.title}</p>
+                  </div>
+                ))}
+              </div>
+            }
           />
           <StatCard
-            icon={CalendarCheck}
-            label="Total Bookings"
-            value="27"
+            icon={FolderDot }
+            label="Total Active Bookings"
+            value="10"
             trend="+8.1% from last month"
           />
           <StatCard
-            icon={UserCheck}
-            label="New Customers"
+            icon={Users}
+            label="Total Family"
             value="15"
             trend="+15.3% from last month"
           />
           <StatCard
-            icon={Users}
-            label="Total Attendees"
+            icon={Bath}
+            label="Total Services"
             value="350"
             trend="+10.2% from last month"
           />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-gray-800/40 backdrop-blur-sm rounded-3xl p-6 border border-gray-700/30">
+          <div className="bg-gray-800/40 backdrop-blur-sm rounded-3xl p-4 md:p-6 border border-gray-700/30">
             <h3 className="text-lg font-semibold text-white mb-6">
               Revenue Overview
             </h3>
-            <div className="h-[300px]">
+            <div className="h-[150px] md:h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={revenueData}>
                   <defs>
@@ -221,7 +243,7 @@ const dashboard = () => {
             <h3 className="text-lg font-semibold text-white mb-6">
               Weekly Bookings
             </h3>
-            <div className="h-[300px]">
+            <div className="h-[150px] md:h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={bookingsData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
@@ -241,7 +263,7 @@ const dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur-sm rounded-3xl p-6 border border-gray-700/30">
+        <div className="bg-gray-800/40 backdrop-blur-sm rounded-3xl p-6 border border-gray-700/30 overflow-x-auto">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-white">
               Recent Bookings

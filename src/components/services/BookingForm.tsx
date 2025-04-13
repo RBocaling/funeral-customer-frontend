@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -55,16 +53,13 @@ import {
   Info,
   MapPin,
   Package,
-  Settings,
   Star,
   Building,
   Users,
-  Settings2,
   ListMinus,
   Settings2Icon,
 } from "lucide-react";
 import { format } from "date-fns";
-import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
@@ -128,7 +123,6 @@ const BookingForm = ({
   setIsOpen,
 }: EnhancedBookingModalProps) => {
   const [user, _] = useState<any>({});
-  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedService, setSelectedService] = useState<any>(null);
   const [selectedCasket, setSelectedCasket] = useState<any>(null);
@@ -187,7 +181,7 @@ const BookingForm = ({
 
   // Form setup
   const form = useForm<BookingFormData>({
-    resolver: zodResolver(bookingSchema),
+    // resolver: zodResolver(bookingSchema),
     defaultValues: {
       customerId: undefined, // or set it to a number/string if needed
       providerId: provider.id,
@@ -217,11 +211,7 @@ const BookingForm = ({
       }
     } catch (error) {
       console.error("Error loading services:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load services. Please try again.",
-        variant: "destructive",
-      });
+     
     } finally {
     }
   };
@@ -236,11 +226,7 @@ const BookingForm = ({
       setCaskets(data);
     } catch (error) {
       console.error("Error loading caskets:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load caskets. Please try again.",
-        variant: "destructive",
-      });
+      
     } finally {
       setCasketsLoading(false);
     }
@@ -256,11 +242,7 @@ const BookingForm = ({
       setFlowers(data);
     } catch (error) {
       console.error("Error loading flowers:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load flower arrangements. Please try again.",
-        variant: "destructive",
-      });
+      
     } finally {
       setFlowersLoading(false);
     }
@@ -278,11 +260,7 @@ const BookingForm = ({
       setRooms(data);
     } catch (error) {
       console.error("Error loading memorial rooms:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load memorial rooms. Please try again.",
-        variant: "destructive",
-      });
+      
     } finally {
       setRoomsLoading(false);
     }
@@ -308,23 +286,16 @@ const BookingForm = ({
       queryClient.invalidateQueries({
         queryKey: [`/api/customer/bookings/${user?.id}`],
       });
-      toast({
-        title: "Booking successful",
-        description: "Your funeral service has been booked successfully.",
-      });
+     
       setIsOpen(false);
     },
     onError: (error: Error) => {
-      toast({
-        title: "Booking failed",
-        description: error.message,
-        variant: "destructive",
-      });
-    },
+      console.log(error);
+    }
   });
 
   // Form submission
-  const onSubmit = (data: BookingForm) => {
+  const onHandleSubmit = (data: BookingForm) => {
     // Calculate total amount in cents
     const totalAmount = calculateTotal();
 
@@ -352,11 +323,6 @@ const BookingForm = ({
   // Step navigation
   const nextStep = () => {
     if (currentStep === 0 && !selectedService) {
-      toast({
-        title: "Please select a service",
-        description: "Select a service to proceed with your booking.",
-        variant: "destructive",
-      });
       return;
     }
 
@@ -392,12 +358,7 @@ const BookingForm = ({
       const contactPhone = form.getValues("contactPhone");
 
       if (!contactName || !contactPhone) {
-        toast({
-          title: "Contact details required",
-          description:
-            "Please provide your name and phone number for booking confirmation.",
-          variant: "destructive",
-        });
+        
         return;
       }
     }
@@ -414,12 +375,7 @@ const BookingForm = ({
   };
 
   const viewServiceDetails = () => {
-    toast({
-      title: "Service Details",
-      description: `Viewing detailed information for ${
-        provider.businessName || provider.username
-      }`,
-    });
+   
   };
 
   const handleServiceSelect = (service: any) => {
@@ -470,7 +426,7 @@ const BookingForm = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-[720px] max-h-[90vh] overflow-y-auto bg-background/95 backdrop-blur-xl border-primary/10 shadow-xl rounded-4xl overflow-x-hidden">
+      <DialogContent className="w-full max-w-screen sm:max-w-[720px] max-h-screen md:max-h-[90vh] overflow-y-auto bg-background/95 backdrop-blur-xl border-primary/10 shadow-xl rounded-4xl overflow-x-hidden">
         <DialogHeader className="text-center pb-2">
           <DialogTitle className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
             Book Funeral Service
@@ -537,7 +493,7 @@ const BookingForm = ({
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onHandleSubmit)} className="space-y-6 overflow-x-hidden">
             {/* Step 1: Service Details */}
             {currentStep === 0 && (
               <div className="space-y-6">
@@ -755,6 +711,7 @@ const BookingForm = ({
                   <h3 className="text-lg font-medium">Select a Casket</h3>
                   {customizeCasket ? (
                     <button
+                      type="button"
                       className="flex items-center gap-2 text-violet-500 cursor-pointer"
                       onClick={toggleCustomCasket}
                     >
@@ -789,8 +746,8 @@ const BookingForm = ({
                             <div className="animate-spin h-8 w-8 border-2 border-primary rounded-full border-t-transparent"></div>
                           </div>
                         ) : caskets.length === 0 ? (
-                          <div className="text-center py-8">
-                            <div className="space-y-4 p-4 rounded-lg">
+                          <div className="text-center py-8  max-w-2xl overflow-x-hidden md:overflow-x-visible">
+                            <div className="space-y-4 p-4 rounded-lg max-w-full">
                               <h4 className="font-medium">
                                 Choose Casket Manually
                               </h4>
@@ -799,7 +756,7 @@ const BookingForm = ({
                                 opts={{
                                   align: "start",
                                 }}
-                                className="w-full max-w-xl"
+                                className="md:w-full md:max-w-xl overflow-x-hidden md:overflow-x-visible"
                               >
                                 <CarouselContent>
                                   {Array.from({ length: 5 }).map((_, index) => (
@@ -874,9 +831,8 @@ const BookingForm = ({
                                 <CarouselPrevious />
                                 <CarouselNext />
                               </Carousel>
-                              <div className="flex items-start justify-start gap-7">
+                              <div className="flex flex-col md:flex-row md:items-start justify-start gap-7sw-full ">
                                 <FormField
-                                  control={form.control}
                                   name="casketColor"
                                   render={({ field }) => (
                                     <FormItem>
@@ -923,7 +879,6 @@ const BookingForm = ({
                                 />
 
                                 <FormField
-                                  control={form.control}
                                   name="casketMaterial"
                                   render={({ field }) => (
                                     <FormItem>
@@ -961,7 +916,6 @@ const BookingForm = ({
                                 />
 
                                 <FormField
-                                  control={form.control}
                                   name="casketFinish"
                                   render={({ field }) => (
                                     <FormItem>
@@ -999,7 +953,7 @@ const BookingForm = ({
                                 />
                               </div>
 
-                              <div className="space-y-4">
+                              <div className="space-y-4 w-full ">
                                 <div>
                                   <Label>Width (cm): {casketWidth}</Label>
                                   <Slider
@@ -1156,13 +1110,13 @@ const BookingForm = ({
                     </p>
                   </div>
                 ) : (
-                  <div className=" flex items-center justify-center">
+                  <div className=" flex items-center justify-center ">
                     {flowersLoading ? (
                       <div className="flex items-center justify-censter py-8">
                         <div className="animate-spin h-8 w-8 border-2 border-primary rounded-full border-t-transparent"></div>
                       </div>
                     ) : flowers.length === 0 ? (
-                      <div className="text-center">
+                      <div className="text-center overflow-x-hidden md:overflow-x-visible">
                         <Carousel
                           opts={{
                             align: "start",
@@ -1337,7 +1291,7 @@ const BookingForm = ({
                         <div className="animate-spin h-8 w-8 border-2 border-primary rounded-full border-t-transparent"></div>
                       </div>
                     ) : rooms.length === 0 ? (
-                      <div className="text-center">
+                      <div className="text-center overflow-x-hidden md:overflow-x-visible">
                         <Carousel
                           opts={{
                             align: "start",
@@ -1500,7 +1454,6 @@ const BookingForm = ({
 
                 <div className="grid grid-cols-1 gap-4">
                   <FormField
-                    control={form.control}
                     name="contactName"
                     render={({ field }) => (
                       <FormItem className="">
@@ -1510,7 +1463,6 @@ const BookingForm = ({
                             placeholder="Enter contact name"
                             {...field}
                             className="w-full py-4"
-                            className="w-full py-4"
                           />
                         </FormControl>
                         <FormMessage />
@@ -1519,7 +1471,6 @@ const BookingForm = ({
                   />
 
                   <FormField
-                    control={form.control}
                     name="contactPhone"
                     render={({ field }) => (
                       <FormItem>
@@ -1537,12 +1488,11 @@ const BookingForm = ({
                   />
 
                   <FormField
-                    control={form.control}
                     name="date"
                     render={({ field }) => (
                       <FormItem className="flex flex-col ">
                         <FormLabel>Service Date</FormLabel>
-                        <Popover className="w-full py-4">
+                        <Popover >
                           <PopoverTrigger asChild>
                             <FormControl>
                               <Button
@@ -1561,13 +1511,13 @@ const BookingForm = ({
                             </FormControl>
                           </PopoverTrigger>
                           <PopoverContent className="w-auto p-0" align="start">
-                            <CalendarComponent
+                            {/* <CalendarComponent
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
                               disabled={(date) => date < new Date()}
                               initialFocus
-                            />
+                            /> */}
                           </PopoverContent>
                         </Popover>
                         <FormMessage />
@@ -1576,13 +1526,11 @@ const BookingForm = ({
                   />
 
                   <FormField
-                    control={form.control}
                     name="time"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Service Time</FormLabel>
                         <Select
-                          className="w-full py-4"
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
@@ -1607,7 +1555,6 @@ const BookingForm = ({
                   />
 
                   <FormField
-                    control={form.control}
                     name="notes"
                     render={({ field }) => (
                       <FormItem>
@@ -1617,7 +1564,6 @@ const BookingForm = ({
                             placeholder="Any special requests or notes for the service provider"
                             className="resize-none"
                             {...field}
-                            className="w-full py-4"
                           />
                         </FormControl>
                         <FormMessage />

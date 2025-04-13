@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,17 +8,8 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+
 import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { MapPin } from "lucide-react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";

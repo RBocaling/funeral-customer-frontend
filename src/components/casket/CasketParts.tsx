@@ -137,7 +137,7 @@ const CasketParts = () => {
             >
               <cylinderGeometry
                 args={[0.03, 0.03, 0.15, 16]}
-                rotation={[0, 0, Math.PI / 2]}
+                // rotation={[0, 0, Math.PI / 2]}
               />
             </mesh>
           </group>

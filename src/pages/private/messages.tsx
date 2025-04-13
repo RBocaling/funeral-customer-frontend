@@ -11,7 +11,7 @@ function Messages() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<TabType>("all");
   const [chats, setChats] = useState<Chat[]>(initialChats);
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, _] = useState<Message[]>(initialMessages);
 
   const filteredChats = chats.filter((chat) => {
     const matchesSearch =

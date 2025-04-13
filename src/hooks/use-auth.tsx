@@ -6,7 +6,6 @@ import {
 } from "@tanstack/react-query";
 import { z } from "zod";
 import { getQueryFn, apiRequest, queryClient } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 
 type User = {
@@ -14,6 +13,7 @@ type User = {
   username: string;
   userType: "admin" | "member";
   profileComplete: boolean;
+  fullName?:string
 };
 
 type LoginData = {
@@ -46,7 +46,6 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const { toast } = useToast();
   const [, setLocation] = useLocation();
 
   const {
@@ -74,17 +73,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         : `/${user.userType}/profile`;
 
       setLocation(next);
-      toast({
-        title: "Login successful",
-        description: `Welcome, ${user.username}!`,
-      });
+      
     },
-    onError: (error) => {
-      toast({
-        title: "Login failed",
-        description: error.message,
-        variant: "destructive",
-      });
+    onError: () => {
+    
     },
   });
 
@@ -99,17 +91,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: (user) => {
       queryClient.setQueryData(["/api/user"], user);
       setLocation(`/${user.userType}/profile`);
-      toast({
-        title: "Registration successful",
-        description: "Please complete your profile.",
-      });
+      
     },
-    onError: (error) => {
-      toast({
-        title: "Registration failed",
-        description: error.message,
-        variant: "destructive",
-      });
+    onError: () => {
+      
     },
   });
 
@@ -120,17 +105,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);
       setLocation("/auth");
-      toast({
-        title: "Logout successful",
-        description: "You have been logged out.",
-      });
+      
     },
-    onError: (error) => {
-      toast({
-        title: "Logout failed",
-        description: error.message,
-        variant: "destructive",
-      });
+    onError: () => {
+      
     },
   });
 

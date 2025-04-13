@@ -1,4 +1,3 @@
-import React from 'react'
 
 const BookingStatus = ({steps}:{steps:any}) => {
   return (

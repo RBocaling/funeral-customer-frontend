@@ -2,11 +2,9 @@ import {
   Environment,
   ContactShadows,
   Lightformer,
-  SpotLight,
 } from "@react-three/drei";
 import CasketModel from "./CasketModel";
 import CameraControls from "./CameraControls";
-import * as THREE from "three";
 import { CasketPart } from "@/lib/constants";
 
 interface SceneProps {
@@ -17,7 +15,6 @@ interface SceneProps {
 const Scene = ({ setIsLoading, activeComponent }: SceneProps) => {
   return (
     <>
-      {/* Enhanced Lighting for realistic reflection */}
       <ambientLight intensity={0.3} />
       <directionalLight
         position={[5, 5, 5]}

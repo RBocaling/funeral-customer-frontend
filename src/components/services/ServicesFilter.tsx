@@ -23,13 +23,13 @@ const ServicesFilter = ({
 }: PropsType) => {
   return (
     <div className="mb-8">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex  flex-col md:flex-row md:items-center justify-between mb-4 gap-5">
         <TitlePage
           label="Funeral Services"
         />
         <div className="flex items-center gap-5">
           <Select value={sortOrder} onValueChange={setSortOrder}>
-            <SelectTrigger className="w-auto bg-background border  rounded-full shadow-sm focus:ring-2 focus:ring-primary px-4">
+            <SelectTrigger className="w-1/2 md:w-auto bg-background border  rounded-full shadow-sm focus:ring-2 focus:ring-primary px-4">
               <span className="flex items-center text-sm">
                 <Star className="h-4 w-4 mr-2 text-amber-500" />
                 <span className="hidden sm:inline font-medium">Sort: </span>
@@ -48,7 +48,7 @@ const ServicesFilter = ({
               <SelectItem value="popularity">Most Popular</SelectItem>
             </SelectContent>
           </Select>
-          <div className="relative">
+          <div className="relative w-1 md:w-auto overflow-hiddesn">
             <Search
               size={15}
               className="text-gray-500 absolute top-1/2 -translate-y-1/2 left-3"
@@ -56,7 +56,7 @@ const ServicesFilter = ({
             <Input
               type="text"
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-10  w-32 md:w-auto"
               placeholder="Search.."
             />
           </div>

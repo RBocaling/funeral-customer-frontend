@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "./use-auth";
-import { useToast } from "./use-toast";
 
 // Message types
 export type MessageType = 'chat' | 'reaction' | 'user_joined' | 'user_left';
@@ -25,7 +24,6 @@ export function useLiveStream({ sessionId, onMessage }: UseLiveStreamProps) {
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState<StreamMessage[]>([]);
   const { user } = useAuth();
-  const { toast } = useToast();
   
   // Track connection attempts
   const reconnectAttempts = useRef(0);
@@ -34,11 +32,7 @@ export function useLiveStream({ sessionId, onMessage }: UseLiveStreamProps) {
   // Create and connect to WebSocket
   const connect = useCallback(() => {
     if (reconnectAttempts.current >= maxReconnectAttempts) {
-      toast({
-        title: "Connection Failed",
-        description: "Unable to connect to the live stream. Please try again later.",
-        variant: "destructive",
-      });
+      
       return;
     }
     
@@ -80,11 +74,7 @@ export function useLiveStream({ sessionId, onMessage }: UseLiveStreamProps) {
       };
       
       newSocket.onerror = () => {
-        toast({
-          title: "Connection Error",
-          description: "There was an error connecting to the live stream.",
-          variant: "destructive",
-        });
+        
         newSocket.close();
       };
       
@@ -119,13 +109,9 @@ export function useLiveStream({ sessionId, onMessage }: UseLiveStreamProps) {
       setSocket(newSocket);
     } catch (error) {
       console.error("Error connecting to WebSocket:", error);
-      toast({
-        title: "Connection Error",
-        description: "Could not connect to the live stream server.",
-        variant: "destructive",
-      });
+      
     }
-  }, [sessionId, user, toast, socket, onMessage]);
+  }, [sessionId, user, socket, onMessage]);
   
   // Connect on mount
   useEffect(() => {
@@ -151,11 +137,7 @@ export function useLiveStream({ sessionId, onMessage }: UseLiveStreamProps) {
   // Send a chat message
   const sendChatMessage = useCallback((message: string) => {
     if (!socket || socket.readyState !== WebSocket.OPEN || !user) {
-      toast({
-        title: "Not Connected",
-        description: "You are not connected to the live stream.",
-        variant: "destructive",
-      });
+      
       return;
     }
     
@@ -169,16 +151,12 @@ export function useLiveStream({ sessionId, onMessage }: UseLiveStreamProps) {
     };
     
     socket.send(JSON.stringify(chatMessage));
-  }, [sessionId, socket, user, toast]);
+  }, [sessionId, socket, user]);
   
   // Send a reaction
   const sendReaction = useCallback((reactionType: string) => {
     if (!socket || socket.readyState !== WebSocket.OPEN || !user) {
-      toast({
-        title: "Not Connected",
-        description: "You are not connected to the live stream.",
-        variant: "destructive",
-      });
+    
       return;
     }
     
@@ -192,7 +170,7 @@ export function useLiveStream({ sessionId, onMessage }: UseLiveStreamProps) {
     };
     
     socket.send(JSON.stringify(reactionMessage));
-  }, [sessionId, socket, user, toast]);
+  }, [sessionId, socket, user]);
   
   return {
     isConnected,

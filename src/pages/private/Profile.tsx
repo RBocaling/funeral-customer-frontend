@@ -1,10 +1,6 @@
-import React from "react";
 import {
   Download,
   CalendarDays,
-  Clock4,
-  UserCheck,
-  LogOut,
   Heart,
   ChevronRight,
   Phone,
@@ -107,7 +103,7 @@ const Profile = () => {
   return (
     <div className="max-w-6xl w-full mx-auto text-white p-6">
       {/* Header */}
-      <div className="flex justify-between items-start mb-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-5">
         <div>
           <TitlePage
             label="Profile"
@@ -135,7 +131,7 @@ const Profile = () => {
               {""}
             </div>
           </div>
-          <div className="flex items-center gap-12 my-5">
+          <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-12 my-5">
             <GridCard key={1} title="Customer" label="Role" />
             <GridCard
               key={1}

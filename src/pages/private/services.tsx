@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -236,22 +235,5 @@ const Services = () => {
   );
 };
 
-const StatCard = ({
-  icon,
-  label,
-  count,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  count: number;
-}) => (
-  <div className="bg-slate-100 dark:bg-slate-800 rounded-2xl shadow-md p-4 flex flex-col items-center justify-center">
-    <div className="bg-white dark:bg-slate-700 rounded-full p-3 mb-2">
-      {icon}
-    </div>
-    <p className="text-xs text-muted-foreground">{label}</p>
-    <p className="text-lg font-bold text-primary">{count}</p>
-  </div>
-);
 
 export default Services;

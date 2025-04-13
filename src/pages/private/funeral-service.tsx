@@ -1,24 +1,12 @@
 import { useState } from "react";
-import { useLocation } from "wouter";
-import { format } from "date-fns";
 import {
-  Calendar,
   Eye,
   Plus,
   Search,
-  Video,
   X,
   Play,
-  Share2,
-  Users,
   Lock,
-  MicOff,
-  Mic,
-  VideoOff,
-  PhoneOff,
-  DollarSign,
   Trash2,
-  Star,
   PencilLine,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -33,10 +21,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import Stepper from "@/components/ui/stepper";
-import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -89,9 +74,6 @@ const funeralService = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isRecording, setIsRecording] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isVideoOff, setIsVideoOff] = useState(false);
-
   const [newStream, setNewStream] = useState({
     title: "",
     description: "",
@@ -117,11 +99,7 @@ const funeralService = () => {
     setViewModalOpen(true);
   };
 
-  const handleNextStep = () => {
-    if (activeStep < 2) {
-      setActiveStep(activeStep + 1);
-    }
-  };
+
 
   const handlePrevStep = () => {
     if (activeStep > 1) {
@@ -133,10 +111,7 @@ const funeralService = () => {
     setIsRecording(true);
   };
 
-  const handleEndLive = () => {
-    setIsRecording(false);
-    setViewModalOpen(false);
-  };
+ 
 
   return (
     <div className="space-y-6 container mx-auto px-5">

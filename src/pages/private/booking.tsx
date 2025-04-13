@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import {
   Calendar,
   MapPin,
@@ -271,11 +271,11 @@ function Booking() {
   return (
     <div className="relative ">
       <div className="container px-5 mx-auto">
-        <div className="flex justify-between items-center mb-12">
+        <div className="flex flex-col md:flex-row gap-5 md:justify-between md:items-center mb-12">
           <TitlePage
             label="My Bookings"
           />
-          <div className="relative flex items-center gap-5 mb-7">
+          <div className="relative flex items-center gap-5 mb-3 md:mb-7">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input

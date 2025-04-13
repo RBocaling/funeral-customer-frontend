@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,14 +6,12 @@ import {
 } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Slider } from "@/components/ui/slider";
-import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import ColorPicker from "./ColorPicker";
 import MaterialSelector from "./MaterialSelector";
 import {
   CasketPart,
-  CasketPartConfig,
   Material,
   partConfigs,
   materials,
@@ -33,15 +30,10 @@ const ConfigPanel = ({
   setActiveComponent,
 }: ConfigPanelProps) => {
   const {
-    isRotating,
-    toggleRotation,
-    rotationSpeed,
-    setRotationSpeed,
+    
     setPartColor,
     setPartMaterial,
     getPartConfig,
-    setCapOpen,
-    isCapOpen,
   } = useCasketStore();
 
   const handleColorChange = (color: string) => {

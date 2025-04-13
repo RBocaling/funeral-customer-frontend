@@ -1,30 +1,13 @@
 import { useState } from "react";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -35,50 +18,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { UserPlus, Mail, MoreVertical, Activity, Users, Heart, ChevronRight, Phone, MapPin } from "lucide-react";
-import { toast } from "sonner";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import {  Mail, Heart, ChevronRight, Phone, MapPin } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import TitlePage from "@/components/ui/title-page";
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  relation: z.string().min(1, {
-    message: "Please select a relation.",
-  }),
-});
 
 const FamilyMembers = () => {
   const [open, setOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      relation: "",
-    },
-  });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    toast.success("Invitation sent successfully!");
-    setOpen(false);
-    form.reset();
-  };
+
 const familyMembers = [
   {
     id: 1,
@@ -128,7 +78,7 @@ const familyMembers = [
   return (
     <div className="space-y-8 container px-5 mx-auto ">
       <div className="relative ">
-        <div className="relative  flex items-center justify-between">
+        <div className="relative  flex flex-col md:flex-row gap-5 md:items-center md:justify-between">
         
           <TitlePage
             label="Family Members"

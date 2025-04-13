@@ -1,10 +1,6 @@
-import React from "react";
 import {
   Download,
   CalendarDays,
-  Clock4,
-  UserCheck,
-  LogOut,
   Heart,
   ChevronRight,
   Phone,

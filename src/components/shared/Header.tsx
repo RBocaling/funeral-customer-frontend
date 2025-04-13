@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Moon,
   Sun,
   LayoutDashboard,
-  Search,
-  Calendar,
   MessageSquare,
   LogOut,
-  User,
   Menu,
   X,
   Bath,
@@ -16,14 +12,14 @@ import {
   Mail,
   Shuffle,
 } from "lucide-react";
-import { useTheme } from "./theme-provider";
 import { useLocation } from "wouter";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useThemeStore } from "@/store/themeStore";
 
 // Simple theme toggle component
 const ModeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useThemeStore();
 
   return (
     <button
@@ -85,7 +81,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50  w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-5">
         <div className="flex items-center gap-2">
           <Link to="/dashboard">
