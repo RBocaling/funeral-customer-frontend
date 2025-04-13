@@ -53,3 +53,4 @@ export default tseslint.config({
 })
 ```
 # funeral-customer-frontend
+# funeral-service-frontend
