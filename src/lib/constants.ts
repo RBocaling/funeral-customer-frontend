@@ -105,3 +105,23 @@ export const CASKET_STYLES = [
   { id: "premium", name: "Premium" },
   { id: "basic", name: "Basic" }
 ];
+
+
+export const revenueData = [
+  { name: "Jan", value: 12000 },
+  { name: "Feb", value: 19000 },
+  { name: "Mar", value: 15000 },
+  { name: "Apr", value: 22000 },
+  { name: "May", value: 18000 },
+  { name: "Jun", value: 25000 },
+];
+
+export const bookingsData = [
+  { name: "Mon", value: 4 },
+  { name: "Tue", value: 3 },
+  { name: "Wed", value: 5 },
+  { name: "Thu", value: 2 },
+  { name: "Fri", value: 4 },
+  { name: "Sat", value: 6 },
+  { name: "Sun", value: 3 },
+];

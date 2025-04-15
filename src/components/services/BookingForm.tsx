@@ -82,7 +82,7 @@ interface ServiceProvider {
   email: string;
   fullName?: string;
   userType: string;
-  profileComplete: boolean;
+profileComplete: boolean;
   createdAt: Date;
   businessName?: string;
   location?: string;

@@ -16,8 +16,6 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateLayout from "./layout/PrivateLayout";
 import PublicLayout from "./layout/PublicLayout";
-import FuneralService from "./pages/private/funeral-service";
-import FeneralBooking from "./pages/private/FuneralBooking";
 import Test from "./pages/private/Test";
 import Profile from "./pages/private/Profile";
 
@@ -40,8 +38,6 @@ export default function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/family-members" element={<FamilyMembers />} />
           <Route path="/family-members" element={<FamilyMembers />} />
-          <Route path="/funeral-service" element={<FuneralService />} />
-          <Route path="/funeral-booking" element={<FeneralBooking />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/test" element={<Test />} />
         </Route>

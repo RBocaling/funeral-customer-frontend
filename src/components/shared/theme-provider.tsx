@@ -16,18 +16,15 @@ export function ThemeProvider({
     useThemeStore.setState({ theme: newTheme });
   };
 
-  // Initial setup: read from localStorage or use default
   useEffect(() => {
     const savedTheme = localStorage.getItem(storageKey) as Theme | null;
     const initialTheme = savedTheme || defaultTheme;
     setTheme(initialTheme);
-    // Also set setTheme in the store
     useThemeStore.setState({
       setTheme,
     });
   }, []);
 
-  // Apply theme class to HTML root
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");

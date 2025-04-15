@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/prop-types */
 import  { useState } from "react";
 import { X, Check, X as XIcon, User } from "lucide-react";
 import PersonalInfo from "./PersonalInfo";

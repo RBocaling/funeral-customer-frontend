@@ -306,3 +306,246 @@ export const chats: Chat[] = [
     online: true,
   },
 ];
+
+export const bookings = [
+  {
+    id: 1,
+    deceasedName: "Sarah Johnson",
+    customerName: "Michael Johnson",
+    customerEmail: "michael.johnson@email.com",
+    customerPhone: "+1 (555) 123-4567",
+    location: "Grace Memorial Chapel",
+    date: "March 15, 2025",
+    time: "10:00 AM",
+    attendees: 120,
+    status: "Confirmed",
+    services: {
+      casket: "Premium Mahogany",
+      flowers: "White Lilies & Roses",
+      memorial: "Digital Memorial Service",
+    },
+    additionalNotes:
+      "Family requests privacy during the service. Digital memorial link will be shared with attendees.",
+    totalPrice: 8500,
+    image:
+      "https://media.istockphoto.com/id/1447462464/photo/close-up-of-person-in-black-praying-at-outdoor-funeral.jpg?s=612x612&w=0&k=20&c=NQWKq6W8KemPyFuV9gtiPo7md4vskgiF1l5iQfj1MlU=",
+  },
+  {
+    id: 2,
+    deceasedName: "Robert Wilson",
+    customerName: "Emily Wilson",
+    customerEmail: "emily.wilson@email.com",
+    customerPhone: "+1 (555) 234-5678",
+    location: "Eternal Peace Cemetery",
+    date: "March 16, 2025",
+    time: "2:30 PM",
+    attendees: 80,
+    status: "Pending",
+    services: {
+      casket: "Classic Oak",
+      flowers: "Mixed Seasonal Bouquet",
+      memorial: "Traditional Service",
+    },
+    additionalNotes:
+      "Please arrange for live music during the service. Family prefers classical compositions.",
+    totalPrice: 6800,
+    image:
+      "https://honeywell.scene7.com/is/image/honeywell/hon-corp-commercial-buildings-tab6",
+  },
+  {
+    id: 3,
+    deceasedName: "Maria Rodriguez",
+    customerName: "Carlos Rodriguez",
+    customerEmail: "carlos.rodriguez@email.com",
+    customerPhone: "+1 (555) 345-6789",
+    location: "Sacred Heart Church",
+    date: "March 17, 2025",
+    time: "11:15 AM",
+    attendees: 150,
+    status: "Confirmed",
+    services: {
+      casket: "Silver Steel",
+      flowers: "Red & White Roses",
+      memorial: "Hybrid Service",
+    },
+    additionalNotes:
+      "Bilingual service requested. Please ensure all materials are available in both English and Spanish.",
+    totalPrice: 7200,
+    image:
+      "https://images.unsplash.com/photo-1490122417551-6ee9691429d0?auto=format&fit=crop&q=80&w=1000",
+  },
+];
+
+
+// dashboard
+ export const dashboardBookings = [
+    {
+      id: 1,
+      deceasedName: "Sarah Johnson",
+      customerName: "Michael Johnson",
+      customerEmail: "michael.johnson@email.com",
+      customerPhone: "+1 (555) 123-4567",
+      location: "Grace Memorial Chapel",
+      date: "March 15, 2025",
+      time: "10:00 AM",
+      attendees: 120,
+      status: "Confirmed",
+      services: {
+        casket: "Premium Mahogany",
+        flowers: "White Lilies & Roses",
+        memorial: "Digital Memorial Service",
+      },
+      additionalNotes:
+        "Family requests privacy during the service. Digital memorial link will be shared with attendees.",
+      totalPrice: 8500,
+      image:
+        "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&q=80&w=1000",
+    },
+    {
+      id: 2,
+      deceasedName: "Robert Wilson",
+      customerName: "Emily Wilson",
+      customerEmail: "emily.wilson@email.com",
+      customerPhone: "+1 (555) 234-5678",
+      location: "Eternal Peace Cemetery",
+      date: "March 16, 2025",
+      time: "2:30 PM",
+      attendees: 80,
+      status: "Pending",
+      services: {
+        casket: "Classic Oak",
+        flowers: "Mixed Seasonal Bouquet",
+        memorial: "Traditional Service",
+      },
+      additionalNotes:
+        "Please arrange for live music during the service. Family prefers classical compositions.",
+      totalPrice: 6800,
+      image:
+        "https://images.unsplash.com/photo-1544829832-c8047d6a8d04?auto=format&fit=crop&q=80&w=1000",
+    },
+    {
+      id: 3,
+      deceasedName: "Maria Rodriguez",
+      customerName: "Carlos Rodriguez",
+      customerEmail: "carlos.rodriguez@email.com",
+      customerPhone: "+1 (555) 345-6789",
+      location: "Sacred Heart Church",
+      date: "March 17, 2025",
+      time: "11:15 AM",
+      attendees: 150,
+      status: "Confirmed",
+      services: {
+        casket: "Silver Steel",
+        flowers: "Red & White Roses",
+        memorial: "Hybrid Service",
+      },
+      additionalNotes:
+        "Bilingual service requested. Please ensure all materials are available in both English and Spanish.",
+      totalPrice: 7200,
+      image:
+        "https://images.unsplash.com/photo-1490122417551-6ee9691429d0?auto=format&fit=crop&q=80&w=1000",
+    },
+];
+  
+export const dashboardTransactions = [
+  {
+    title: "Completed",
+    value: 10,
+ },
+  {
+    title: "Pending",
+    value: 10,
+ },
+]
+
+
+// family member
+export const familyMembers = [
+  {
+    id: 1,
+    name: "Juan Dela Cruz",
+    relation: "Grand Father",
+    phone: "+1 (555) 123-4567",
+    email: "juan.t@example.com",
+    location: "San Francisco, CA",
+    avatar:
+      "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?&w=150&h=150&fit=crop",
+  },
+  {
+    id: 2,
+    name: "John Dela Cruz",
+    relation: "Father",
+    phone: "+1 (555) 234-5678",
+    email: "john.t@example.com",
+    location: "San Francisco, CA",
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?&w=150&h=150&fit=crop",
+  },
+  {
+    id: 3,
+    name: "Sarah Dela Cruz",
+    relation: "Sister",
+    phone: "+1 (555) 345-6789",
+    email: "sarah.t@example.com",
+    location: "Los Angeles, CA",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?&w=150&h=150&fit=crop",
+  },
+  {
+    id: 4,
+    name: "Michael Dela Cruz",
+    relation: "Brother",
+    phone: "+1 (555) 456-7890",
+    email: "michael.t@example.com",
+    location: "New York, NY",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?&w=150&h=150&fit=crop",
+  },
+];
+
+// online burial
+// previous
+export const mockPreviousStreams = [
+  {
+    id: "1",
+    title: "Memorial Service for Maria Santos",
+    description: "Family memorial service for our beloved mother",
+    dateCreated: "2025-02-15T14:30:00",
+    thumbnail: "",
+    isPrivate: true,
+    viewers: 24,
+    duration: "1h 45m",
+  },
+  {
+    id: "2",
+    title: "Prayer Vigil for Pedro Reyes",
+    description: "Evening prayer vigil with family and friends",
+    dateCreated: "2025-03-01T19:00:00",
+    thumbnail: "",
+    isPrivate: false,
+    viewers: 56,
+    duration: "2h 10m",
+  },
+  {
+    id: "3",
+    title: "Funeral Mass for Antonio Cruz",
+    description: "Celebration of life for our loving father and grandfather",
+    dateCreated: "2025-03-28T10:00:00",
+    thumbnail: "",
+    isPrivate: false,
+    viewers: 112,
+    duration: "2h 30m",
+  },
+];
+
+// upcming
+export const mockUpcomingStreams = [
+  {
+    id: "4",
+    title: "Memorial Service for Juan Dela Cruz",
+    description: "A celebration of life for our beloved father",
+    scheduledDate: "2025-04-08T15:00:00",
+    thumbnail: "",
+    isPrivate: false,
+  },
+];

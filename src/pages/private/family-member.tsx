@@ -18,68 +18,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import {  Mail, Heart, ChevronRight, Phone, MapPin } from "lucide-react";
+import { Mail, Heart, ChevronRight, Phone, MapPin } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import TitlePage from "@/components/ui/title-page";
-
+import { familyMembers } from "@/lib/mockdata";
 
 const FamilyMembers = () => {
   const [open, setOpen] = useState(false);
-
-
-
-const familyMembers = [
-  {
-    id: 1,
-    name: "Juan Dela Cruz",
-    relation: "Grand Father",
-    phone: "+1 (555) 123-4567",
-    email: "juan.t@example.com",
-    location: "San Francisco, CA",
-    avatar:
-      "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?&w=150&h=150&fit=crop",
-  },
-  {
-    id: 2,
-    name: "John Dela Cruz",
-    relation: "Father",
-    phone: "+1 (555) 234-5678",
-    email: "john.t@example.com",
-    location: "San Francisco, CA",
-    avatar:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?&w=150&h=150&fit=crop",
-  },
-  {
-    id: 3,
-    name: "Sarah Dela Cruz",
-    relation: "Sister",
-    phone: "+1 (555) 345-6789",
-    email: "sarah.t@example.com",
-    location: "Los Angeles, CA",
-    avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?&w=150&h=150&fit=crop",
-  },
-  {
-    id: 4,
-    name: "Michael Dela Cruz",
-    relation: "Brother",
-    phone: "+1 (555) 456-7890",
-    email: "michael.t@example.com",
-    location: "New York, NY",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?&w=150&h=150&fit=crop",
-  },
-];
-
-
-
 
   return (
     <div className="space-y-8 container px-5 mx-auto ">
       <div className="relative ">
         <div className="relative  flex flex-col md:flex-row gap-5 md:items-center md:justify-between">
-        
           <TitlePage
             label="Family Members"
             description="Manage your family members and send invitations"

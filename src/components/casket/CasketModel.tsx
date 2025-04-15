@@ -13,7 +13,6 @@ interface CasketModelProps {
   activeComponent: CasketPart;
 }
 
-// Preload the model
 useGLTF.preload("/models/white_casket.glb");
 
 const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
@@ -28,33 +27,26 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
 
   const { camera } = useThree();
 
-  // Add audio for lid open/close sound
   const { playLid } = useAudio();
 
-  // Load the casket model
   const { scene: casketModel } = useGLTF("/models/white_casket.glb") as GLTF & {
     scene: THREE.Group;
   };
 
-  // Position the camera properly when component mounts
   useEffect(() => {
     camera.position.set(0, 1.0, 3.5);
     camera.lookAt(0, 0, 0);
   }, [camera]);
 
-  // Play sound effect when casket lid state changes
   useEffect(() => {
     if (modelLoaded && prevCapState !== isCapOpen) {
-      // Only play sound if the state actually changed
       playLid();
       setPrevCapState(isCapOpen);
     }
   }, [isCapOpen, prevCapState, modelLoaded, playLid]);
 
-  // Get configurations from the store
   const partConfigs = useCasketStore((state) => state.partConfigs);
 
-  // Map to help identify which part of the model corresponds to each casket part
   const partNameMapping = {
     [CasketPart.BODY]: ["body", "main", "shell", "base"],
     [CasketPart.CAP]: ["lid", "cap", "top"],
@@ -73,7 +65,6 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
     ],
   };
 
-  // Function to guess which part a mesh belongs to based on its name
   const guessCasketPart = (name: string): CasketPart | null => {
     name = name.toLowerCase();
 
@@ -83,11 +74,9 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
       }
     }
 
-    // If no specific match, default to body for items without clear identifiers
     return null;
   };
 
-  // Create a material based on the part configuration
   const createMaterial = useCallback(
     (partConfig: { color: string; material: Material }): THREE.Material => {
       const { color, material } = partConfig;
@@ -145,21 +134,16 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
     []
   );
 
-  // Update model materials based on part configurations and active component passed as prop
   const updateModelMaterials = useCallback(() => {
     if (!modelRef.current) return;
 
-    // For the currently active component's configuration
     const activeConfig = partConfigs[activeComponent];
     console.log(
       `Active component ${activeComponent} using color ${activeConfig.color}`
     );
 
-    // Since our model is simple (likely one main mesh), we'll apply the material
-    // of the currently selected component to the entire casket
     modelRef.current.traverse((child) => {
       if (child instanceof THREE.Mesh) {
-        // Apply the material based on the active component
         const material = createMaterial(activeConfig);
         child.material = material;
         console.log(
@@ -169,15 +153,11 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
     });
   }, [activeComponent, partConfigs, createMaterial]);
 
-  // Use effect to track the active component from the configuration panel
   useEffect(() => {
-    // Initialize the previous config store on first run
     if (!prevPartConfigs.current) {
       prevPartConfigs.current = JSON.parse(JSON.stringify(partConfigs));
     }
 
-    // This will run when any part configuration changes
-    // We'll log changes for debugging
     Object.entries(partConfigs).forEach(([part, config]) => {
       const prevConfig = prevPartConfigs.current?.[part as CasketPart];
       if (
@@ -191,22 +171,18 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
       }
     });
 
-    // Save current configs for next comparison
     prevPartConfigs.current = JSON.parse(JSON.stringify(partConfigs));
   }, [partConfigs]);
 
-  // Reference to previous part configurations for detecting changes
   const prevPartConfigs = useRef<Record<CasketPart, CasketPartConfig> | null>(
     null
   );
 
-  // Handle model loading
   useEffect(() => {
     if (casketModel) {
       setModelLoaded(true);
       console.log("Casket model loaded successfully");
 
-      // Print model hierarchy for debugging
       console.log("Model hierarchy:");
       const printHierarchy = (obj: THREE.Object3D, indent = "") => {
         console.log(`${indent}${obj.name} (type: ${obj.type})`);
@@ -217,17 +193,14 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
       };
       printHierarchy(casketModel);
 
-      // Store mesh names for debugging
       const meshNames: string[] = [];
 
-      // Customize model after loading
       casketModel.traverse((child) => {
         if (child instanceof THREE.Mesh) {
           child.castShadow = true;
           child.receiveShadow = true;
           meshNames.push(child.name);
 
-          // Make a best attempt to identify the part
           const partName = child.name.toLowerCase();
           const casketPart = guessCasketPart(partName);
           if (casketPart) {
@@ -238,10 +211,6 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
 
       console.log("All mesh names:", meshNames);
 
-      // Since our model is simple, treat the main mesh as the entire casket body
-      // and we'll apply different materials to different parts when customizing
-
-      // Initialize materials by applying current configuration
       setTimeout(() => {
         updateModelMaterials();
       }, 100);
@@ -250,7 +219,6 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
     }
   }, [casketModel, setIsLoading, updateModelMaterials]);
 
-  // Update the materials whenever part configurations or activeComponent changes
   useEffect(() => {
     if (modelLoaded && modelRef.current) {
       console.log("Updating casket materials to match new configuration");
@@ -258,21 +226,16 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
     }
   }, [modelLoaded, updateModelMaterials]);
 
-  // Reference for lid animation
   const lidRef = useRef<THREE.Object3D | null>(null);
   const [lidAngle, setLidAngle] = useState(0);
-  const targetLidAngle = isCapOpen ? Math.PI * 0.6 : 0; // 60 degrees when open, 0 when closed
+  const targetLidAngle = isCapOpen ? Math.PI * 0.6 : 0;
 
-  // Handle auto-rotation and lid animation
   useFrame((_, delta) => {
-    // Handle auto-rotation
     if (casketRef.current && isRotating) {
       casketRef.current.rotation.y += rotationSpeed;
     }
 
-    // Handle lid animation
     if (modelRef.current && modelLoaded) {
-      // Find the lid part in the cloned model each frame if not already found
       if (!lidRef.current) {
         modelRef.current.traverse((child) => {
           if (
@@ -287,35 +250,29 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
         });
       }
 
-      // If we have a lid reference, animate it
       if (lidRef.current) {
-        // Smoothly interpolate the current angle towards the target angle
-        const lidAnimationSpeed = 2.0; // Speed of animation (adjust as needed)
+        const lidAnimationSpeed = 2.0;
         const newLidAngle = THREE.MathUtils.lerp(
           lidAngle,
           targetLidAngle,
           delta * lidAnimationSpeed
         );
 
-        // Only update if there's a significant change
         if (Math.abs(newLidAngle - lidAngle) > 0.001) {
           setLidAngle(newLidAngle);
 
-          // Apply rotation around the hinge
           lidRef.current.rotation.x = newLidAngle;
         }
       }
     }
   });
 
-  // Base platform for the casket
   const woodTexture = useTexture("/textures/wood.jpg");
   woodTexture.repeat.set(4, 4);
   woodTexture.wrapS = woodTexture.wrapT = THREE.RepeatWrapping;
 
   return (
     <group ref={casketRef}>
-      {/* Base platform */}
       <mesh
         position={[0, -0.55, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
@@ -326,7 +283,6 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
       </mesh>
 
       {useRealisticModel ? (
-        // Realistic casket model
         <group
           ref={modelRef}
           position={[0, 0, 0]}
@@ -349,7 +305,6 @@ const CasketModel = ({ setIsLoading, activeComponent }: CasketModelProps) => {
           )}
         </group>
       ) : (
-        // Fallback to the simple geometric casket
         <CasketParts />
       )}
     </group>
